@@ -8,31 +8,38 @@ import java.net.URLConnection;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.FeatureInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class HistoryActivity extends Activity {
 
 	private static final String TAG="";
+	private ProgressBar pb;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setContentView(R.layout.activity_history);
 		
-		
+		pb = (ProgressBar)findViewById(R.id.progressbar);
+		pb.setProgress(60);
 
+		
+		//http://www.learnandroideasily.blogspot.in/2013/05/custom-progress-bar-in-android.html
+		
 	}
 	
 	/** 
@@ -40,36 +47,34 @@ public class HistoryActivity extends Activity {
 	 * @param view
 	 */
 	public void changeView(View view){
-//		Intent intent = new Intent(getApplicationContext(), PriceActivity.class);
-		if(view.getId()==R.id.myViewButton){
+		Intent intent = new Intent(getApplicationContext(), PriceActivity.class);
+		int source = view.getId();
+		
+		switch (source) {
+		case R.id.myViewButton:
 			System.out.println("Du trykket for å bytte til fra mine bidrag");
-		}
-		else if(view.getId()==R.id.kollektivViewButton){
+			break;
+		case R.id.kollektivViewButton:
 			System.out.println("Du trykket for å bytte til kollektivets bidrag");
-		}
-		else if(view.getId()==R.id.chronograpicViewButton){
+			break;
+			
+		case R.id.chronograpicViewButton:
 			System.out.println("Du trykket for å sortere på dato");
-		}
-		else if(view.getId()==R.id.ratingViewButton){
+			break;
+			
+		case R.id.ratingViewButton:
 			System.out.println("Du trykket for å sortere etter rating");
+			break;
+			
+		case R.id.priceViewButton:
+			System.out.println("Du trykket for å gå til premieoversikten");
+			break;
+
+		default:
+			break;
 		}
+		
 	}
 	
-	private Bitmap getImageBitmap(String url) {
-        Bitmap bm = null;
-        try {
-            URL aURL = new URL(url);
-            URLConnection connection = aURL.openConnection();
-            connection.connect();
-            InputStream is = connection.getInputStream();
-            BufferedInputStream bis = new BufferedInputStream(is);
-            bm = BitmapFactory.decodeStream(bis);
-            bis.close();
-            is.close();
-       } catch (IOException e) {
-           Log.e(TAG, "Error getting bitmap", e);
-       }
-       return bm;
-    } 
-	
+
 }
