@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.FeatureInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
@@ -36,6 +37,10 @@ public class HistoryActivity extends Activity {
 		
 		pb = (ProgressBar)findViewById(R.id.progressbar);
 		pb.setProgress(60);
+		
+		Drawable customDrawable = getResources().getDrawable(R.drawable.custom_progressbar);
+		pb.setProgressDrawable(customDrawable);
+		
 
 		
 		//http://www.learnandroideasily.blogspot.in/2013/05/custom-progress-bar-in-android.html
@@ -47,12 +52,12 @@ public class HistoryActivity extends Activity {
 	 * @param view
 	 */
 	public void changeView(View view){
-		Intent intent = new Intent(getApplicationContext(), PriceActivity.class);
+//		Intent intent = new Intent(getApplicationContext(), PriceActivity.class);
 		int source = view.getId();
 		
 		switch (source) {
 		case R.id.myViewButton:
-			System.out.println("Du trykket for å bytte til fra mine bidrag");
+			System.out.println("Du trykket for å bytte til mine bidrag");
 			break;
 		case R.id.kollektivViewButton:
 			System.out.println("Du trykket for å bytte til kollektivets bidrag");
@@ -68,6 +73,9 @@ public class HistoryActivity extends Activity {
 			
 		case R.id.priceViewButton:
 			System.out.println("Du trykket for å gå til premieoversikten");
+			break;
+		case R.id.progressbar:
+			System.out.println("Du trykket for å gå tilbake via progressbaren");
 			break;
 
 		default:
