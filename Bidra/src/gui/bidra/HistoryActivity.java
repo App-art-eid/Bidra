@@ -38,7 +38,7 @@ public class HistoryActivity extends Activity {
 		pb = (ProgressBar)findViewById(R.id.progressbar);
 		pb.setProgress(60);
 		
-		Drawable customDrawable = getResources().getDrawable(R.drawable.custom_progressbar);
+		Drawable customDrawable = getResources().getDrawable(R.layout.custom_progressbar);
 		pb.setProgressDrawable(customDrawable);
 		
 

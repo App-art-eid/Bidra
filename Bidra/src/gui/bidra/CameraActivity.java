@@ -12,18 +12,24 @@ import java.util.List;
 
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
-import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.os.Environment;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.support.v4.view.MotionEventCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 
 public class CameraActivity extends Activity {
 	private static final String TAG = "CAMERA_ACTIVITY";
@@ -33,6 +39,12 @@ public class CameraActivity extends Activity {
 	private Preview mPreview;
 	private int pictureNumber, flashMode, numberOfFlashModes;
 	private List<String> flashModes;
+	private float mLastTouchX, mLastTouchY;
+	private int mActivePointerId;
+	private float mPosX = 0, mPosY = 0;
+	private DrawerLayout mDrawerLayout;
+	private ListView mDrawerList;
+	private String[] challenges;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,25 +67,21 @@ public class CameraActivity extends Activity {
         
         mCamera.setParameters(parameters);
         
+        challenges = getResources().getStringArray(R.array.challenges);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.main_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.custome_challenge, challenges));
+        mDrawerList.setOnItemClickListener(new DrawerItemListener());
+        
         Button captureButton = (Button) findViewById(id.button_capture_photo);
-        captureButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				mCamera.takePicture(null, null, mPicture);
-			}
-		});
+        captureButton.setOnClickListener(new CapturePicture());
         
         Button flashButton = (Button) findViewById(id.button_flash);
-        flashButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				changeFlash();
-				mCamera.getParameters().setFlashMode(flashModes.get(flashMode));
-				
-			}
-		});
+        flashButton.setOnClickListener(new FlashButton());
+        
+        Button challengesButton = (Button)findViewById(R.id.challenges_button);
+        challengesButton.setOnClickListener(new OpenDrawerWithButton());
         
     }
     
@@ -134,6 +142,7 @@ public class CameraActivity extends Activity {
 	    }
 	};
 	
+	@SuppressLint("SimpleDateFormat") 
 	private File getOutputMediaFile(){
 	    File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
 	              Environment.DIRECTORY_PICTURES), "Bidra");
@@ -158,4 +167,123 @@ public class CameraActivity extends Activity {
 		}
 	}
 	
+	protected class CapturePicture implements OnClickListener{
+
+		@Override
+		public void onClick(View v) {
+			mCamera.takePicture(null, null, mPicture);
+		}
+		
+	}
+	
+	protected class FlashButton implements OnClickListener{
+
+		@Override
+		public void onClick(View v) {
+			changeFlash();
+			mCamera.getParameters().setFlashMode(flashModes.get(flashMode));
+			
+		}
+		
+	}
+	
+	protected class OpenDrawerWithButton implements OnClickListener{
+
+		@Override
+		public void onClick(View v) {
+			mDrawerLayout.openDrawer(mDrawerList);
+			
+		}
+	}
+	
+	protected class DrawerItemListener implements ListView.OnItemClickListener{
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			//TODO: Add what's happening here.
+			mDrawerLayout.closeDrawer(mDrawerList);			
+		}
+		
+	}
+	
+	protected class MyOwnTouchListener implements View.OnTouchListener{
+
+		@Override
+		public boolean onTouch(View v, MotionEvent me) {
+		             
+		    final int action = MotionEventCompat.getActionMasked(me); 
+		        
+		    switch (action) { 
+			    case MotionEvent.ACTION_DOWN: {
+			        final int pointerIndex = MotionEventCompat.getActionIndex(me); 
+			        final float x = MotionEventCompat.getX(me, pointerIndex); 
+			        final float y = MotionEventCompat.getY(me, pointerIndex); 
+			            
+			        // Remember where we started (for dragging)
+			        mLastTouchX = x;
+			        mLastTouchY = y;
+			        // Save the ID of this pointer (for dragging)
+			        mActivePointerId = MotionEventCompat.getPointerId(me, 0);
+			        break;
+			    }
+			            
+			    case MotionEvent.ACTION_MOVE: {
+			        // Find the index of the active pointer and fetch its position
+			        final int pointerIndex = 
+			                MotionEventCompat.findPointerIndex(me, mActivePointerId);  
+			            
+			        final float x = MotionEventCompat.getX(me, pointerIndex);
+			        final float y = MotionEventCompat.getY(me, pointerIndex);
+			            
+			        // Calculate the distance moved
+			        final float dx = x - mLastTouchX;
+			        final float dy = y - mLastTouchY;
+		
+			        mPosX += dx;
+			        mPosY += dy;
+			        
+			        v.setX(mPosX);
+			        
+		
+			        v.invalidate();
+		
+			        // Remember this touch position for the next move event
+			        mLastTouchX = x;
+			        mLastTouchY = y;
+		
+			        break;
+			    }
+			            
+			    case MotionEvent.ACTION_UP: {
+			    	
+			        break;
+			    }
+			            
+			    case MotionEvent.ACTION_CANCEL: {
+			        mActivePointerId = MotionEvent.INVALID_POINTER_ID;
+			        break;
+			    }
+			    
+			    case MotionEvent.ACTION_POINTER_UP: {
+		            
+			        final int pointerIndex = MotionEventCompat.getActionIndex(me); 
+			        final int pointerId = MotionEventCompat.getPointerId(me, pointerIndex); 
+		
+			        if (pointerId == mActivePointerId) {
+			            // This was our active pointer going up. Choose a new
+			            // active pointer and adjust accordingly.
+			            final int newPointerIndex = pointerIndex == 0 ? 1 : 0;
+			            mLastTouchX = MotionEventCompat.getX(me, newPointerIndex); 
+			            mLastTouchY = MotionEventCompat.getY(me, newPointerIndex); 
+			            mActivePointerId = MotionEventCompat.getPointerId(me, newPointerIndex);
+			        }
+			        break;
+			    }       
+		    }
+    	return true;
+		}
+	}
 }
+
+	

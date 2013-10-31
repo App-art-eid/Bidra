@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+    
+    <LinearLayout
+        android:id="@+id/linearlayout_challenges" 
+        android:orientation="vertical"
+        android:layout_weight="0.5"
+        android:layout_width="match_parent"
+		>
+		
+	   <include 
+	       android:id="@+id/header_challenges"
+	       layout="@layout/custom_challenges_header"
+	       android:layout_weight="1"
+	       />
+	   
+	   <include 
+	       android:id="@+id/challenge_1"
+	       layout="@layout/activity_challenges"
+	       android:layout_weight="1"
+	       />
+	   
+	   <include 
+	       android:id="@+id/challenge_2"
+	       layout="@layout/activity_challenges"
+	       android:layout_weight="1"
+	       />
+	   
+	   <include 
+	       android:id="@+id/challenge_3"
+	       layout="@layout/activity_challenges"
+	       android:layout_weight="1"
+	       />
+	   
+	   <include 
+	       android:id="@+id/challenge_4"
+	       layout="@layout/activity_challenges"
+	       android:layout_weight="1"
+	       />
+	   
+	   <include 
+	       android:id="@+id/time_left"
+	       layout="@layout/custom_time_left_challenges"
+	       android:layout_weight="1"/>
+	   </LinearLayout>
+       
+    
+   	<ImageView 
+        android:id="@+id/challenges_background"
+        android:cropToPadding="true"
+        android:layout_weight="0.5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+    
+	   
+	   
+	   </LinearLayout>   

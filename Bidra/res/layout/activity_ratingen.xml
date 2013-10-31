@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:orientation="vertical">
+    
+    <include 
+        android:id="@+id/progressbar"
+        layout="@layout/custom_progressbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+    
+	<include 
+	    android:id="@+id/rater_picture"
+	    layout="@layout/raterpicture"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="4"
+	    />
+	
+	<include 
+	    android:id="@+id/rater_bar"
+	    layout="@layout/raterbar"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="1"
+	    />
+	
+	<ImageView 
+        android:id="@+id/next_rating"
+        android:src="@drawable/lolswak"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+	
+	<include 
+	    android:id="@+id/screen_shower"
+	    layout="@layout/screen_shower"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="1"/>
+    
+</LinearLayout>

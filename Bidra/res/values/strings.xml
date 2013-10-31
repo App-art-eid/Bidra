@@ -7,5 +7,6 @@
     <string name="sort_text">Sorter</string>
     <string name="mitt_view">Mitt view</string>
     <string name="kollektiv_view">Kollektivets view</string>
+    <color name="white">#FFFFFF</color>
 
 </resources>

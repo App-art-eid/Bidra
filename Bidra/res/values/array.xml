@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array name="challenges">
+        <item>Vaske badet</item>
+        <item>Gå med søppla</item>
+        <item>Tørke benken</item>
+        <item>Ta ut av oppvaskmaskinen</item>
+        
+    </string-array>
+    
+</resources>

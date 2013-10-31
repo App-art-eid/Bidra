@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout 
+ 	xmlns:android="http://schemas.android.com/apk/res/android"
+ 	android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <LinearLayout
+    	android:orientation="vertical"
+    	android:layout_width="match_parent"
+    	android:layout_height="match_parent">
+		<include
+	       android:id="@+id/progressbar_camera" 
+	       layout="@layout/custom_progressbar"
+	       android:layout_width="fill_parent"
+	       android:layout_height="wrap_content"
+	       />
+
+	   	<include 
+	       android:id="@+id/main_content"
+	       layout="@layout/activity_camera"
+	       />
+	   
+	   	<include
+	       	android:id="@+id/screen_shower_camera"
+	       	layout="@layout/screen_shower"
+	       	android:layout_width="fill_parent"
+	       	android:layout_height="wrap_content"
+			/>
+        
+    </LinearLayout>
+    
+    <ListView 
+        android:id="@+id/left_drawer"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="#111"
+        
+        />
+</android.support.v4.widget.DrawerLayout>
