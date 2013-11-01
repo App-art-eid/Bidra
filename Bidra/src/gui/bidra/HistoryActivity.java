@@ -123,22 +123,26 @@ public class HistoryActivity extends Activity {
 		switch (source) {
 		case R.id.myViewButton:
 			System.out.println("Du trykket for å bytte til mine bidrag");
+//			setContentView(R.layout.activity_history);
 			break;
 		case R.id.kollektivViewButton:
 			System.out.println("Du trykket for å bytte til kollektivets bidrag");
+//			setContentView(R.layout.activity_history);
 			break;
 			
 		case R.id.chronograpicViewButton:
 			System.out.println("Du trykket for å sortere på dato");
+//			setContentView(R.layout.activity_history);
 			break;
 			
 		case R.id.ratingViewButton:
 			System.out.println("Du trykket for å sortere etter rating");
+//			setContentView(R.layout.activity_history);
 			break;
 			
 		case R.id.priceViewButton:
 			System.out.println("Du trykket for å gå til premieoversikten");
-			intent= new Intent(this.getBaseContext(), PriceActivity.class);
+			intent= new Intent(this, PricesActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.progressbar:
