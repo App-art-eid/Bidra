@@ -22,17 +22,12 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback{
 		super(context);
 		mCamera = camera;
 		
-//		mSurfaceView = new SurfaceView(context);
-//		addView(mSurfaceView);
-		
 		mHolder = this.getHolder();
 		mHolder.addCallback(this);
 		mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		
 	}
 	
-	
-
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
